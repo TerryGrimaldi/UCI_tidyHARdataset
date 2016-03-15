@@ -102,8 +102,6 @@ if(!file.exists("CleanData")){
   dir.create("CleanData")
 }
 setwd("CleanData")
-write.csv(cleanDSstats,file = "cleanedDS.csv")
-write.csv(summaryStats,file = "cleanedSummaryDS.csv")
-write.table(cleanDSstats,file = "cleanedDS.txt", sep = " ")
-write.table(summaryStats,file = "cleanedSummaryDS.txt", sep = " ")
+write.table(cleanDSstats,file = "cleanedDS.txt", sep = " ",row.names = FALSE)
+write.table(summaryStats,file = "cleanedSummaryDS.txt", sep = " ", row.names = FALSE)
 

@@ -1,57 +1,51 @@
 ---
-title: "CodeBook"
-author: "Terry Grimaldi"
-date: "13 March 2016"
+title: "Getting and Cleaning Data Assignement: Cleaning UCI HAR Dataset"
 output: html_document
 ---
 
-##1.Executive Summary
-This CodeBook is divided into two main sections, the first section guides the users through the preparation (prior to running the script) and then running the script to generate two tidy datasets step by step. At the complete the user will have two tidy datasets loaded into R called **cleanedDS** and **cleanedSummaryDS**. The two cleaned datasets are stored in both csv and txt formats, thats is, four files are created. for re-importing. Secondly, this CodeBook describes each variable stored in both datasets mentioned in bold above.
+## 1.Raw Data Set Summary  
+The experiments have been carried out with a group of 30 volunteers within an age bracket of 19-48 years. Each person performed six activities (WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING) wearing a 
+smartphone (Samsung Galaxy S II) on the waist. Using its embedded accelerometer and gyroscope, we captured 3-axial linear acceleration and 3-axial angular velocity at a constant rate of 50Hz. The experiments have been video-recorded 
+to label the data manually. The obtained dataset has been randomly partitioned into two sets, where 70% of the volunteers was selected for generating the training data and 30% the test data.  
 
-##2.Data Cleaning and Preparation Steps
-Follow the steps below in order. 
+The sensor signals (accelerometer and gyroscope) were pre-processed by applying noise filters and then sampled in fixed-width sliding windows of 2.56 sec and 50% overlap (128 readings/window). 
+The sensor acceleration signal, which has gravitational and body motion components, was separated using a Butterworth low-pass filter into body acceleration and gravity. The gravitational force is 
+assumed to have only low frequency components, therefore a filter with 0.3 Hz cutoff frequency was used. From each window, a vector of features was obtained by calculating variables from the time and 
+frequency domain. See 'features_info.txt' for more details. 
 
-#### Preparation Step
-The script is designed to run from your default R or R Studio programming diectory. Further the sub-directory /UCIdataset must exist. Follow steps a) to c) below to complete this preparation step.
+#### 1.1.For each record it is provided:  
 
-a) Create the directory /UCIdataset under **your default working R/R Studio programming directory**
-b) Fork the GitHub repo url.... ../UCIdataset/
-c) Sync your fork to your local computer.
+- Triaxial acceleration from the accelerometer (total acceleration) and the estimated body acceleration.
+- Triaxial Angular velocity from the gyroscope. 
+- A 561-feature vector with time and frequency domain variables. 
+- Its activity label. 
+- An identifier of the subject who carried out the experiment.
 
-On completion your local computer should look like..  
-../Rprog/UCIdataset/run_analysis.R  
-../Rprog/UCIdataset/ReadMe.md  
-../Rprog/UCIdataset/CodeBook.md  
-../Rprog/UCIdataset/RawData/..(This directory contains the raw UCI HAR dataset)  
-../Rprog/UCIdataset/CleanData/..(Sample cleaned data sample - this directory can be deleted as it will be re-created after running the R script)  
+## 2. Transformed Clean Data Set Summary  
+Executing the R code will create two dats sets which are finally save in text file format using write.table.  
 
-#### Clean Data Procedure (Option 1)
-This R script was developed on a Windows 7 x64 computer with i5 cpu and 8GB ram. The script will run completely. At the end of the script you will have two tidy data sets called **cleanedDSstats** and **summaryStats**, plus a sub-directory called **CleanData** which contains files for each datasets. To run the run in one go type the following commands in the R/R Studio console:  
-> setwd("UCIdatset")  
-> source("run_analysis.R")  
+#### 2.1 cleanedDS data set  
+**Name:** - cleanedDS  
+**Dimensions:** - 82 variables x 10299 observations  
+**Details:** - SubjectID, SubjectGroup, activityName + 79 variables representing the mean and standard deviation value from the merged raw data sets.  
+**Saved to:** - cleanedDS.txt  
 
-When the script completes two tidy datasets are created as follows:  
-cleanDSstats - this dataset merges "test" and "train" datasets and subsets all mean and SD values for each observation and saves the datsets /Cleandata as csv and txt format.
+#### 2.2 summaryStats data set  
+**Name:** - summaryStats 
+**Dimensions:** - 82 variables x 180 observations  
+**Details:** - SubjectID, SubjectGroup, activityName + summarised mean of 79 variables representing the mean and standard deviation value from the merged raw data sets.  
+**Saved to:** - ccleanedSummaryDS.txt  
 
-#### Clean Data Procedure (Option 2)
-Use this method only if the computer running the script does not have the resources to run in one go. Complete the preparation step first.
-
-Open the R script and observe the code. Notice code in extsensively commented. Inparticluar note the comments "Step n" where "n" is a number from 1 to 7. These steps break the code in logical chunks as follows:  
-**Step 1** - Loads R libraries and reads in activity labels and feature labels.  
-**Step 2** - Reads in Test group subject ID and there activity observations, there is 2947 observations over 9 subjectIDs. Remove intermediate datasets.    
-**Step 3** - Reads in Train group subject ID and there activity observations, there is 7352 observations over 21 subjectIDs. Remove intermediate datasets.    
-**Step 4** - Merges the test and train datasets in one tidy dataset with the complete 561 feature, a combine observation count of 10299 across 30 subjectIDs. Remove intermediate datasets.    
-**Step 5** - Subsets the intermeediate tidy dataset from step 4 and creates a new dataset containin only variable that represent a mean or SD value. The new datset contains 10299 observations for 79 variables for the 30 subjectIDs. Remove intermediate datasets.    
-**Step 6** - Summaries the dataset created in step 6 and create a new dataset on means for each variable. The number of rows is now 180 (30 subjetcID x 6 different activities).Remove intermediate datasets.  
-**Step 7** - Write the two datasets to csv and txt file formats.  
+## Transformation/Cleaning Procedure
+Step 1. Create a directory called **/UCIdataset** under R's default working directory.  
+Step 2. Download the raw dataset from [UCI Machine Learning Center](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones) and copy to **/UCIdataset/RawData**  
+Step 3. Fork the git repo [UCI_tidyHARdataset](https://github.com/TerryGrimaldi/UCI_tidyHARdataset.git)  
+Step 4. Copy run_analysis.R, CodeBook.md and ReadMe.md to **/UCIdataset**  
+Step 5. execute the R script using the command **source("run_analysis.R")**  
 
 
-##3.Data Dictionary
-The section describes each of the variables, datatypes and where applicable the expected range of data values.
-
-#### cleanDSstats Dataset
-Dataset dimension = 10299 observations for 79 feature grouped by SubjectID and Activity, SubjetcTGroup.
-Total dimension - 82 x 10299.  
+##3. Variable/Signal Description
+Use this section to find information about the data set variables/signals.
 
 **SubjectID**  
 datatype - numeric   
@@ -65,324 +59,84 @@ values of "test" ot "train" that represents the group a subject ID belongs to.
 datatype - string  
 values  of "LAYING", "SITTING", "STANDING", "WALKING", "WALKING_DOWNSTAIRS", "WALKING_UPSTAIRS" represent the activity each subject ID performed. Thats one observation will represent one of these activities perform by a subjetcID.
 
-**tBodyAcc-mean()-X**  
-datatype - numeric
-Value - Represents a subjectIDs mean body acceleration value along the x-axis for a single observation.   
+The following 79 variables/signals represent the subset of features supplied in the original raw data set. All variables/signals are **numeric** data type. They represent the mean and standard deviation values from the original data set.  
+tBodyAcc-mean()-X  
+tBodyAcc-mean()-Y  
+tBodyAcc-mean()-Z  
+tBodyAcc-std()-X  
+tBodyAcc-std()-Y  
+tBodyAcc-std()-Z  
+tGravityAcc-mean()-X  
+tGravityAcc-mean()-Y  
+tGravityAcc-mean()-Z  
+tGravityAcc-std()-X  
+tGravityAcc-std()-Y  
+tGravityAcc-std()-Z  
+tBodyAccJerk-mean()-X  
+tBodyAccJerk-mean()-Y  
+tBodyAccJerk-mean()-Z  
+tBodyAccJerk-std()-X  
+tBodyAccJerk-std()-Y  
+tBodyAccJerk-std()-Z  
+tBodyGyro-mean()-X  
+tBodyGyro-mean()-Y  
+tBodyGyro-mean()-Z  
+tBodyGyro-std()-X  
+tBodyGyro-std()-Y  
+tBodyGyro-std()-Z  
+tBodyGyroJerk-mean()-X  
+tBodyGyroJerk-mean()-Y  
+tBodyGyroJerk-mean()-Z  
+tBodyGyroJerk-std()-X  
+tBodyGyroJerk-std()-Y  
+tBodyGyroJerk-std()-Z  
+tBodyAccMag-mean()  
+tBodyAccMag-std()  
+tGravityAccMag-mean()  
+tGravityAccMag-std()  
+tBodyAccJerkMag-mean()  
+tBodyAccJerkMag-std()  
+tBodyGyroMag-mean()  
+tBodyGyroMag-std()  
+tBodyGyroJerkMag-mean()  
+tBodyGyroJerkMag-std()  
+fBodyAcc-mean()-X  
+fBodyAcc-mean()-Y  
+fBodyAcc-mean()-Z  
+fBodyAcc-std()-X  
+fBodyAcc-std()-Y  
+fBodyAcc-std()-Z  
+fBodyAcc-meanFreq()-X  
+fBodyAcc-meanFreq()-Y  
+fBodyAcc-meanFreq()-Z  
+fBodyAccJerk-mean()-X  
+fBodyAccJerk-mean()-Y  
+fBodyAccJerk-mean()-Z  
+fBodyAccJerk-std()-X  
+fBodyAccJerk-std()-Y  
+fBodyAccJerk-std()-Z  
+fBodyAccJerk-meanFreq()-X  
+fBodyAccJerk-meanFreq()-Y  
+fBodyAccJerk-meanFreq()-Z  
+fBodyGyro-mean()-X  
+fBodyGyro-mean()-Y  
+fBodyGyro-mean()-Z  
+fBodyGyro-std()-X  
+fBodyGyro-std()-Y  
+fBodyGyro-std()-Z  
+fBodyGyro-meanFreq()-X  
+fBodyGyro-meanFreq()-Y  
+fBodyGyro-meanFreq()-Z  
+fBodyAccMag-mean()  
+fBodyAccMag-std()  
+fBodyAccMag-meanFreq()  
+fBodyBodyAccJerkMag-mean()  
+fBodyBodyAccJerkMag-std()  
+fBodyBodyAccJerkMag-meanFreq()  
+fBodyBodyGyroMag-mean()  
+fBodyBodyGyroMag-std()  
+fBodyBodyGyroMag-meanFreq()  
+fBodyBodyGyroJerkMag-mean()  
+fBodyBodyGyroJerkMag-std()  
+fBodyBodyGyroJerkMag-meanFreq()  
 
-**tBodyAcc-mean()-Y**  
-datatype - numeric  
-Value - Represents a subjectIDs mean body acceleration value along the y-axis for a single observation.  
-
-**tBodyAcc-mean()-Z**  
-datatype - numeric  
-Value - Represents a subjectIDs mean body acceleration value along the z-axis for a single observation.
-
-**tBodyAcc-std()-X**  
-datatype - numeric  
-Value - Represents a subjectIDs Stanard Deviation (SD) for body acceleration value along the x-axis for a single observation.   
-
-**tBodyAcc-std()-Y**  
-datatype - numeric  
-Value - Represents a subjectIDs Stanard Deviation (SD) for body acceleration value along the y-axis for a single observation.  
-
-**tBodyAcc-std()-Z**  
-datatype - numeric  
-Value - Represents a subjectIDs Stanard Deviation (SD) for body acceleration value along the z-axis for a single observation.  
-
-**tGravityAcc-mean()-X**  
-datatype - numeric  
-Value - Represents a subjectIDs mean acceleration due to gravity along the x-axis for a single observation. 
-
-**tGravityAcc-mean()-Y**  
-datatype - numeric  
-Value - Represents a subjectIDs mean acceleration due to gravity along the y-axis for a single observation.  
-
-**tGravityAcc-mean()-Z**  
-datatype - numeric  
-Value - Represents a subjectIDs mean acceleration due to gravity along the y-axis for a single observation.  
-
-**tGravityAcc-std()-X**  
-datatype - numeric  
-Value - Represents a subjectIDs Stanard Deviation (SD) for acceleration due to gravity along the x-axis for a single observation.  
-
-**tGravityAcc-std()-Y**  
-datatype - numeric  
-Value - Represents a subjectIDs Stanard Deviation (SD) for acceleration due to gravity along the y-axis for a single observation.  
-
-**tGravityAcc-std()-Z**  
-datatype - numeric  
-Value - Represents a subjectIDs Stanard Deviation (SD) for acceleration due to gravity along the z-axis for a single observation.  
-
-**tBodyAccJerk-mean()-X**  
-datatype - numeric  
-Value - Represents a subjectIDs mean jerk acceleration along the x-axis for a single observation.  
-
-**tBodyAccJerk-mean()-Y**  
-datatype - numeric  
-Value - Represents a subjectIDs mean jerk acceleration along the y-axis for a single observation.  
-
-**tBodyAccJerk-mean()-Z**  
-datatype - numeric  
-Value - Represents a subjectIDs mean jerk acceleration along the z-axis for a single observation.  
-
-**tBodyAccJerk-std()-X**  
-datatype - numeric  
-Value - Represents the Standard Deviation (SD) for a subjectIDs jerk acceleration along value along the x-axis for a single observation.  
-
-**tBodyAccJerk-std()-Y**  
-datatype - numeric  
-Value - Represents the Standard Deviation (SD) for a subjectIDs jerk acceleration along value along the y-axis for a single observation.  
-
-**tBodyAccJerk-std()-Z**  
-datatype - numeric  
-Value - Represents the Standard Deviation (SD) for a subjectIDs jerk acceleration along value along the z-axis for a single observation.  
-
-**tBodyGyro-mean()-X**
-datatype - numeric  
-Value - The mean value from the Gyroscope along the x-axis.  
-
-**tBodyGyro-mean()-Y**
-datatype - numeric  
-Value - The mean value from the Gyroscope along the y-axis. 
-
-**tBodyGyro-mean()-Z**
-datatype - numeric  
-Value - The mean value from the Gyroscope along the z-axis. 
-
-**tBodyGyro-std()-X**  
-datatype - numeric  
-Value - The Standard Deviation (SD) value from the Gyroscope along the x-axis. 
-
-**tBodyGyro-std()-Y**  
-datatype - numeric  
-Value - The Standard Deviation (SD) value from the Gyroscope along the x-axis.  
-
-**tBodyGyro-std()-Z**  
-datatype - numeric  
-Value - The Standard Deviation (SD) value from the Gyroscope along the x-axis.  
-
-**tBodyGyroJerk-mean()-X**
-datatype - numeric  
-Value - The mean jerk value from the Gyroscope along the x-axis.  
-
-**tBodyGyroJerk-mean()-Y**  
-datatype - numeric  
-Value - The mean jerk value from the Gyroscope along the y-axis.  
-
-**tBodyGyroJerk-mean()-Z**  
-datatype - numeric  
-Value - The mean jerk value from the Gyroscope along the z-axis.  
-
-**tBodyGyroJerk-std()-X**
-datatype - numeric  
-Value - The Standard Deviation (SD) jerk value from the Gyroscope along the x-axis.  
-
-**tBodyGyroJerk-std()-Y**  
-datatype - numeric  
-Value - The Standard Deviation (SD) jerk value from the Gyroscope along the y-axis.  
-
-**tBodyGyroJerk-std()-Z**  
-datatype - numeric  
-Value - The Standard Deviation (SD) jerk value from the Gyroscope along the z-axis.  
-
-**tBodyAccMag-mean()**  
-datatype - numeric  
-Value - The mean magnitude acceleration value for a single observation.    
-
-**tBodyAccMag-std()**  
-datatype - numeric  
-Value - The Standard Deviation of the magnitude acceleration value for a single observation.  
-
-**tGravityAccMag-mean()**
-datatype - numeric  
-Value - The mean magnitude acceleration value due to gravity for a single observation.  
-
-**tGravityAccMag-std()**  
-datatype - numeric  
-Value - The Standard Deviation of the  magnitude acceleration value due to gravity for a single observation.  
-
-**tBodyAccJerkMag-mean()**  
-datatype - numeric  
-Value - The mean jerk magnitude acceleration value for a single observation.  
-
-**tBodyAccJerkMag-std()**  
-datatype - numeric  
-Value - The Standard Deviation jerk magnitude acceleration value for a single observation.  
-
-**tBodyGyroMag-mean()**  
-datatype - numeric  
-Value - The mean Gyroscope magnitude value for a single observation. 
-
-**tBodyGyroMag-std()**  
-datatype - numeric  
-Value - The Standard Deviation Gyroscope magnitude value for a single observation.  
-
-**tBodyGyroJerkMag-mean()**  
-datatype - numeric  
-Value - The mean Gyroscope jerk magnitude value for a single observation.  
-
-**tBodyGyroJerkMag-std()**  
-datatype - numeric  
-Value - The Standard Deviation Gyroscope jerk magnitude value for a single observation.  
-
-**fBodyAcc-mean()-X**  
-datatype - numeric
-Value - Represents a subjectIDs mean body acceleration value along the x-axis for a single observation.   
-
-**fBodyAcc-mean()-Y**  
-datatype - numeric  
-Value - Represents a subjectIDs mean body acceleration value along the y-axis for a single observation.  
-
-**fBodyAcc-mean()-Z**  
-datatype - numeric  
-Value - Represents a subjectIDs mean body acceleration value along the z-axis for a single observation.
-
-**fGravityAcc-std()-X**  
-datatype - numeric  
-Value - Represents a subjectIDs Stanard Deviation (SD) for acceleration due to gravity along the x-axis for a single observation.  
-
-**fGravityAcc-std()-Y**  
-datatype - numeric  
-Value - Represents a subjectIDs Stanard Deviation (SD) for acceleration due to gravity along the y-axis for a single observation.  
-
-**fGravityAcc-std()-Z**  
-datatype - numeric  
-Value - Represents a subjectIDs Stanard Deviation (SD) for acceleration due to gravity along the z-axis for a single observation.  
-
-**fBodyAcc-meanFreq()-X**  
-datatype - numeric  
-Value - Represents a subjectIDs mean acceleration expressed as a frequency per observation along the x-axis.  
-
-**fBodyAcc-meanFreq()-Y**  
-datatype - numeric  
-Value - Represents a subjectIDs mean acceleration expressed as a frequency per observation along the y-axis.  
-
-**fBodyAcc-meanFreq()-Z**  
-datatype - numeric  
-Value - Represents a subjectIDs mean acceleration expressed as a frequency per observation along the z-axis.  
-
-**fBodyAccJerk-mean()-X**  
-datatype - numeric  
-Value - Represents a subjectIDs mean jerk acceleration expressed along the x-axis.  
-
-**fBodyAccJerk-mean()-Y**  
-datatype - numeric  
-Value - Represents a subjectIDs mean jerk acceleration expressed along the y-axis. 
-
-**fBodyAccJerk-mean()-Z**  
-datatype - numeric  
-Value - Represents a subjectIDs mean jerk acceleration expressed along the z-axis.  
-
-**fBodyAccJerk-std()-X**  
-datatype - numeric  
-Value - Represents a subjectIDs Standard Deviation jerk acceleration expressed along the x-axis. 
-
-**fBodyAccJerk-std()-Y**  
-datatype - numeric  
-Value - Represents a subjectIDs Standard Deviation jerk acceleration expressed along the y-axis. 
-
-**fBodyAccJerk-std()-Z**  
-datatype - numeric  
-Value - Represents a subjectIDs Standard Deviation jerk acceleration expressed along the z-axis. 
-
-**fBodyAccJerk-meanFreq()-X**  
-datatype - numeric  
-Value - Represents a subjectIDs mean jerk acceleration expressed as a frequency per observation along the x-axis. 
-
-**fBodyAccJerk-meanFreq()-Y**  
-datatype - numeric  
-Value - Represents a subjectIDs mean jerk acceleration expressed as a frequency per observation along the x-axis. 
-
-**fBodyAccJerk-meanFreq()-Z**  
-datatype - numeric  
-Value - Represents a subjectIDs mean jerk acceleration expressed as a frequency per observation along the x-axis. 
-
-**fBodyGyro-mean()-X**
-datatype - numeric  
-Value - The mean value from the Gyroscope along the x-axis.  
-
-**fBodyGyro-mean()-Y**
-datatype - numeric  
-Value - The mean value from the Gyroscope along the y-axis. 
-
-**fBodyGyro-mean()-Z**
-datatype - numeric  
-Value - The mean value from the Gyroscope along the z-axis. 
-
-**fBodyGyro-std()-X**  
-datatype - numeric  
-Value - The Standard Deviation (SD) value from the Gyroscope along the x-axis. 
-
-**fBodyGyro-std()-Y**  
-datatype - numeric  
-Value - The Standard Deviation (SD) value from the Gyroscope along the x-axis.  
-
-**fBodyGyro-std()-Z**  
-datatype - numeric  
-Value - The Standard Deviation (SD) value from the Gyroscope along the x-axis.  
-
-**fBodyGyro-meanFreq()-X**  
-datatype - numeric  
-Value - The mean Gryoscope value expressed in frequency along the x-axis for a single observation.  
-
-**fBodyGyro-meanFreq()-Y**  
-datatype - numeric  
-Value - The mean Gryoscope value expressed in frequency along the y-axis for a single observation.  
-
-**fBodyGyro-meanFreq()-Z**  
-datatype - numeric  
-Value - The mean Gryoscope value expressed in frequency along the z-axis for a single observation.  
-
-**fBodyAccMag-mean()**  
-datatype - numeric  
-Value - The mean magnitude of acceleration for an observation.  
-
-**fBodyAccMag-std()**  
-datatype - numeric  
-Value - The Standard Deviation magnitude of acceleration for an observation.  
-
-**fBodyAccMag-meanFreq()**  
-datatype - numeric  
-Value - The mean magnitude of acceleration for an observation expressed as a frequency.   
-
-**fBodyBodyAccJerkMag-mean()**  
-datatype - numeric  
-Value - The mean magnitude of jerk acceleration for an observation.  
-
-**fBodyBodyAccJerkMag-std()**  
-datatype - numeric  
-Value - The Standard Deviation magnitude of jerk acceleration for an observation.  
-
-**fBodyBodyAccJerkMag-meanFreq()**  
-datatype - numeric  
-Value - The mean magnitude of jerk acceleration for an observation expressed as a frequency. 
-
-**fBodyBodyGyroMag-mean()**  
-datatype - numeric  
-Value - The mean magnitude of the Gryoscope for an observation. 
-
-**fBodyBodyGyroMag-std()**  
-datatype - numeric  
-Value - The Standard Deviation magnitude for an observation.  
-
-**fBodyBodyGyroMag-meanFreq()**  
-datatype - numeric  
-Value - The mean magnitude of the Gyroscope for an observation expressed as a frequecy. 
-
-**fBodyBodyGyroJerkMag-mean()**  
-datatype - numeric  
-Value - The mean magnitude for Gyroscope jerk value for an observation. 
-
-**fBodyBodyGyroJerkMag-std()**  
-datatype - numeric  
-Value - The Standard Deviation magnitude for Gyroscope jerk value for an observation.  
-
-**fBodyBodyGyroJerkMag-meanFreq()** 
-datatype - numeric  
-Value - The mean magnitude for Gyroscope jerk value for an observation expressed as a frequency.
-
-
-#### summaryStats Dataset
-Dataset dimension = 82 x 180, where 180 observations = 30 subjectIDs x 6 activities 
-
-This table contains the same feature set as the **cleanDSstats** dataset, except the value are the summary mean for all observations grouped by SubjectID and activity type. The values therfore do not represent single observations.
